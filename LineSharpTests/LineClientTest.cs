@@ -24,8 +24,8 @@ namespace LineSharpTests
         public void ValidateSignatureTest()
         {
             var eventStr = ReadResource("events.json");
-            var client = new LineClient("channel_id", "channel_secret", "8d0cZjCcevNUFA8SlW4Ei8KroKKXmdJzZLMBjxrZuk1EpnTRxr2aek04EUGLuu6LU++u1WhTf6uiq03x4g350Q==");
-            Assert.IsTrue(client.ValidateSignature(eventStr, "4wtQUcLa2kAlZBq34DTIRW0Tomzu2PLPo+N+OWEGO/k="));
+            var client = new LineClient("channel_id", "QUNDRVNTX1RPS0VO", "channel_access_token");
+            Assert.IsTrue(client.ValidateSignature(eventStr, "8kcX2m/vS6vlIkZAEZ5usNMl9BRleaB1alXJOHkW4OU="));
         }
 
         [Test]

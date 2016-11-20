@@ -134,9 +134,8 @@ namespace LineSharp
                 throw new ArgumentNullException(nameof(channelSignature));
             }
 
-            var hasher = new HMACSHA256(Convert.FromBase64String(ChannelAccessToken));
+            var hasher = new HMACSHA256(Convert.FromBase64String(ChannelSecret));
             var hash = hasher.ComputeHash(Encoding.UTF8.GetBytes(content));
-
             return SlowEquals(hash, Convert.FromBase64String(channelSignature));
         }
 
