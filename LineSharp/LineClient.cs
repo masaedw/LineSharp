@@ -18,12 +18,15 @@ namespace LineSharp
             JsonSubtypes.autoRegister(Assembly.GetExecutingAssembly());
         }
 
+        public static readonly string DefaultLineUrlPrefix = "https://api.line.me/v2/bot/";
+
         public string ChannelId { get; }
         public string ChannelSecret { get; }
         public string ChannelAccessToken { get; }
 
-        public string ApiUrlPrefix { get; set; } = "https://api.line.me/v2/bot/";
+        public string ApiUrlPrefix { get; set; } = DefaultLineUrlPrefix;
         public JsonMediaTypeFormatter Formatter { get; }
+
         public List<DelegatingHandler> Handlers { get; } = new List<DelegatingHandler>();
 
         public LineClient(string id, string secret, string accessToken)
