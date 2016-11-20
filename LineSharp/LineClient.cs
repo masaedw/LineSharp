@@ -26,6 +26,11 @@ namespace LineSharp
             Formatter.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
         }
 
+        public IEnumerable<WebhookEventObject> ParseEvent(string content)
+        {
+            return JsonConvert.DeserializeObject<WebhookEventRequest>(content).events;
+        }
+
         public async Task HandleEventAsync(WebhookEventObject ev)
         {
             if (ev == null)

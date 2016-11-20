@@ -1,5 +1,12 @@
-﻿namespace LIneSharp.Messages
+﻿using System.Collections.Generic;
+
+namespace LIneSharp.Messages
 {
+    public class WebhookEventRequest
+    {
+        public IEnumerable<WebhookEventObject> events { get; set; }
+    }
+
     /// <summary>
     /// https://devdocs.line.me/#webhook-event-object
     /// </summary>
