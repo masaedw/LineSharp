@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Json\JsonSubType.cs" />
     <Compile Include="LineClient.cs" />
     <Compile Include="LineException.cs" />
     <Compile Include="Messages\ErrorResponse.cs" />
