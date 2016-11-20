@@ -31,10 +31,10 @@ namespace LineSharp
 
         public List<DelegatingHandler> Handlers { get; } = new List<DelegatingHandler>();
 
-        public LineClient(string id, string secret, string accessToken)
+        public LineClient(string channelId, string channelSecret, string accessToken)
         {
-            ChannelId = id;
-            ChannelSecret = secret;
+            ChannelId = channelId;
+            ChannelSecret = channelSecret;
             ChannelAccessToken = accessToken;
             Formatter = new JsonMediaTypeFormatter();
             Formatter.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
