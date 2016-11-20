@@ -7,7 +7,8 @@ namespace LIneSharp.Messages
 {
     public class WebhookEventRequest
     {
-        public IEnumerable<WebhookEventBase> events { get; set; }
+        [JsonProperty("events")]
+        public IEnumerable<WebhookEventBase> Events { get; set; }
     }
 
     [JsonConverter(typeof(JsonSubtypes))]

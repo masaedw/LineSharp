@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace LIneSharp.Messages
 {
@@ -7,8 +8,11 @@ namespace LIneSharp.Messages
     /// </summary>
     public class ReplyMessage
     {
-        public string replyToken { get; set; }
-        public IEnumerable<SendMessageObject> messages { get; set; }
+        [JsonProperty("replyToken")]
+        public string ReplyToken { get; set; }
+
+        [JsonProperty("messages")]
+        public IEnumerable<SendMessageObject> Messages { get; set; }
     }
 
     /// <summary>
@@ -16,8 +20,11 @@ namespace LIneSharp.Messages
     /// </summary>
     public class PushMessage
     {
-        public string to { get; set; }
-        public IEnumerable<SendMessageObject> messages { get; set; }
+        [JsonProperty("to")]
+        public string To { get; set; }
+
+        [JsonProperty("messages")]
+        public IEnumerable<SendMessageObject> Messages { get; set; }
     }
 
     /// <summary>
@@ -26,32 +33,43 @@ namespace LIneSharp.Messages
     public class SendMessageObject
     {
         // common
-        public string type { get; set; }
+        [JsonProperty("type")]
+        public string Type { get; set; }
 
         // text
-        public string text { get; set; }
+        [JsonProperty("text")]
+        public string Text { get; set; }
 
         // image, video, audio
-        public string originalContentUrl { get; set; }
+        [JsonProperty("originalContentUrl")]
+        public string OriginalContentUrl { get; set; }
 
         // image, video
-        public string previewImageUrl { get; set; }
+        [JsonProperty("previewIageUrl")]
+        public string PreviewImageUrl { get; set; }
 
         // audio
-        public double duration { get; set; }
+        [JsonProperty("duration")]
+        public double Duration { get; set; }
 
         // location
-        public string title { get; set; }
+        [JsonProperty("title")]
+        public string Title { get; set; }
 
-        public string address { get; set; }
+        [JsonProperty("address")]
+        public string Address { get; set; }
 
-        public decimal latitude { get; set; }
+        [JsonProperty("latitude")]
+        public decimal Latitude { get; set; }
 
-        public decimal longitude { get; set; }
+        [JsonProperty("longitude")]
+        public decimal Longitude { get; set; }
 
         // sticker
-        public string packageId { get; set; }
+        [JsonProperty("packageId")]
+        public string PackageId { get; set; }
 
-        public string stickerId { get; set; }
+        [JsonProperty("stickerId")]
+        public string StickerId { get; set; }
     }
 }

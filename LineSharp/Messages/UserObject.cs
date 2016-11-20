@@ -1,10 +1,19 @@
-﻿namespace LIneSharp.Messages
+﻿using Newtonsoft.Json;
+
+namespace LIneSharp.Messages
 {
     public class UserObject
     {
-        public string displayName { get; set; }
-        public string userId { get; set; }
-        public string pictureUrl { get; set; }
-        public string statusMessage { get; set; }
+        [JsonProperty("displayName")]
+        public string DisplayName { get; set; }
+
+        [JsonProperty("userId")]
+        public string UserId { get; set; }
+
+        [JsonProperty("pictureUrl")]
+        public string PictureUrl { get; set; }
+
+        [JsonProperty("statusMessage")]
+        public string StatusMessage { get; set; }
     }
 }

@@ -1,14 +1,22 @@
-﻿namespace LIneSharp.Messages
+﻿using Newtonsoft.Json;
+
+namespace LIneSharp.Messages
 {
     public class ErrorResponse
     {
-        public string message { get; set; }
-        public ErrorDetail[] details { get; set; }
+        [JsonProperty("message")]
+        public string Message { get; set; }
+
+        [JsonProperty("details")]
+        public ErrorDetail[] Details { get; set; }
     }
 
     public class ErrorDetail
     {
-        public string message { get; set; }
-        public string property { get; set; }
+        [JsonProperty("message")]
+        public string Message { get; set; }
+
+        [JsonProperty("property")]
+        public string Property { get; set; }
     }
 }

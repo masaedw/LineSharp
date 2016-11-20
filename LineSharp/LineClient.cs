@@ -42,7 +42,7 @@ namespace LineSharp
 
         public IEnumerable<WebhookEventBase> ParseEvent(string content)
         {
-            return JsonConvert.DeserializeObject<WebhookEventRequest>(content).events;
+            return JsonConvert.DeserializeObject<WebhookEventRequest>(content).Events;
         }
 
         public async Task HandleEventAsync(WebhookEventBase ev)
@@ -158,7 +158,7 @@ namespace LineSharp
                 if (!res.IsSuccessStatusCode)
                 {
                     var body = await res.Content.ReadAsAsync<ErrorResponse>();
-                    throw new LineException(body.message, body);
+                    throw new LineException(body.Message, body);
                 }
             }
         }
@@ -172,7 +172,7 @@ namespace LineSharp
                 if (!res.IsSuccessStatusCode)
                 {
                     var body = await res.Content.ReadAsAsync<ErrorResponse>();
-                    throw new LineException(body.message, body);
+                    throw new LineException(body.Message, body);
                 }
 
                 return JsonConvert.DeserializeObject<TResponse>(await res.Content.ReadAsStringAsync());
@@ -183,10 +183,10 @@ namespace LineSharp
         {
             var msg = new PushMessage
             {
-                to = to,
-                messages = new[]
+                To = to,
+                Messages = new[]
                 {
-                    new SendMessageObject { type = "text", text = text },
+                    new SendMessageObject { Type = "text", Text = text },
                 },
             };
             await PostAsync("message/push", msg);
@@ -196,10 +196,10 @@ namespace LineSharp
         {
             var msg = new ReplyMessage
             {
-                replyToken = replyToken,
-                messages = new[]
+                ReplyToken = replyToken,
+                Messages = new[]
                 {
-                    new  SendMessageObject { type = "text", text = text },
+                    new  SendMessageObject { Type = "text", Text = text },
                 },
             };
             await PostAsync("message/reply", msg);
