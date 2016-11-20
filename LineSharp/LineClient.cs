@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
@@ -16,6 +17,7 @@ namespace LineSharp
 
         public string ApiUrlPrefix { get; set; } = "https://api.line.me/v2/bot/";
         public JsonMediaTypeFormatter Formatter { get; }
+        public List<DelegatingHandler> Handlers { get; } = new List<DelegatingHandler>();
 
         public LineClient(string id, string secret, string accessToken)
         {
@@ -110,7 +112,7 @@ namespace LineSharp
 
         public async Task PostAsync<TMessage>(string url, TMessage msg)
         {
-            using (var client = new HttpClient())
+            using (var client = HttpClientFactory.Create(Handlers.ToArray()))
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ChannelAccessToken);
                 var res = await client.PostAsync($"{ApiUrlPrefix}{url}", msg, Formatter);
@@ -124,7 +126,7 @@ namespace LineSharp
 
         public async Task<TResponse> GetAsync<TResponse>(string url)
         {
-            using (var client = new HttpClient())
+            using (var client = HttpClientFactory.Create(Handlers.ToArray()))
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ChannelAccessToken);
                 var res = await client.GetAsync($"{ApiUrlPrefix}{url}");
