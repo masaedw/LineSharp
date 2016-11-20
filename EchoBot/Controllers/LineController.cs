@@ -17,8 +17,8 @@ namespace EchoBot.Controllers
         public LineController()
         {
             var channelId = Environment.GetEnvironmentVariable("LINE_CHANNEL_ID");
-            var channelSecret = Environment.GetEnvironmentVariable("LINE_CHANNEL_ID");
-            var accessToken = Environment.GetEnvironmentVariable("LINE_CHANNEL_ID");
+            var channelSecret = Environment.GetEnvironmentVariable("LINE_CHANNEL_SECRET");
+            var accessToken = Environment.GetEnvironmentVariable("LINE_CHANNEL_ACCESS_TOKEN");
             Client = new LineClient(channelId, channelSecret, accessToken);
         }
 
