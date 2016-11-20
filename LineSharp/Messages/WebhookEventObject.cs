@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using LineSharp.Json;
 using Newtonsoft.Json;
 
@@ -20,7 +21,7 @@ namespace LIneSharp.Messages
         public ulong Timestamp { get; set; }
 
         [JsonProperty("source")]
-        public SourceObject Source { get; set; }
+        public SourceObjectBase Source { get; set; }
     }
 
     [JsonSubtype("message")]
@@ -77,35 +78,47 @@ namespace LIneSharp.Messages
         public BeaconObject Beacon { get; set; }
     }
 
-    public class SourceObject
+    [JsonConverter(typeof(JsonSubtypes))]
+    public class SourceObjectBase
     {
-        public string type { get; set; }
+        [JsonTag]
+        [JsonProperty("type")]
+        public string Type { get; set; }
 
-        // user
-        public string userId { get; set; }
-
-        // group
-        public string groupId { get; set; }
-
-        // room
-        public string roomId { get; set; }
-
-        public string GetId()
+        public virtual string Id
         {
-            switch (type)
+            get
             {
-                case "user":
-                    return userId;
-
-                case "group":
-                    return groupId;
-
-                case "room":
-                    return roomId;
+                throw new NotImplementedException(); // dummy
             }
-
-            return null;
         }
+    }
+
+    [JsonSubtype("user")]
+    public class UserSoruce : SourceObjectBase
+    {
+        [JsonProperty("userId")]
+        public string UserId { get; set; }
+
+        public override string Id => UserId;
+    }
+
+    [JsonSubtype("group")]
+    public class GroupSoruce : SourceObjectBase
+    {
+        [JsonProperty("groupId")]
+        public string GroupId { get; set; }
+
+        public override string Id => GroupId;
+    }
+
+    [JsonSubtype("room")]
+    public class RoomSoruce : SourceObjectBase
+    {
+        [JsonProperty("roomId")]
+        public string RoomId { get; set; }
+
+        public override string Id => RoomId;
     }
 
     [JsonConverter(typeof(JsonSubtypes))]
