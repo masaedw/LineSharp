@@ -4,6 +4,8 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Reflection;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using LineSharp.Json;
 using LIneSharp.Messages;
@@ -118,6 +120,33 @@ namespace LineSharp
         public virtual Task HandleBeacon(BeaconEvent ev)
         {
             return Task.CompletedTask;
+        }
+
+        public bool ValidateSignature(string content, string channelSignature)
+        {
+            if (content == null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
+
+            if (channelSignature == null)
+            {
+                throw new ArgumentNullException(nameof(channelSignature));
+            }
+
+            var hasher = new HMACSHA256(Convert.FromBase64String(ChannelAccessToken));
+            var hash = hasher.ComputeHash(Encoding.UTF8.GetBytes(content));
+
+            return SlowEquals(hash, Convert.FromBase64String(channelSignature));
+        }
+
+        // http://stackoverflow.com/questions/16953231/cryptography-net-avoiding-timing-attack
+        private static bool SlowEquals(byte[] a, byte[] b)
+        {
+            var diff = (uint)a.Length ^ (uint)b.Length;
+            for (var i = 0; i < a.Length && i < b.Length; i++)
+                diff |= (uint)(a[i] ^ b[i]);
+            return diff == 0;
         }
 
         public async Task PostAsync<TMessage>(string url, TMessage msg)
