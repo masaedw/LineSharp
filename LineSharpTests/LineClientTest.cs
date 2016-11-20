@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace LineSharpTests
 {
-    internal class ParseEventTest
+    internal class LineClientTest
     {
         private string ReadResource(string resourceName)
         {
@@ -19,7 +19,7 @@ namespace LineSharpTests
         }
 
         [Test]
-        public void Test()
+        public void ParseTest()
         {
             var eventStr = ReadResource("events.json");
             var client = new LineClient("xx", "xx", "xx");
