@@ -9,7 +9,7 @@ using LIneSharp.Messages;
 
 namespace EchoBot.Controllers
 {
-    [RoutePrefix("api/{controller}")]
+    [RoutePrefix("api/line")]
     public class LineController : ApiController
     {
         private LineClient Client;
@@ -22,8 +22,8 @@ namespace EchoBot.Controllers
             Client = new LineClient(channelId, channelSecret, accessToken);
         }
 
-        [HttpPost]
-        public async Task<HttpResponseMessage> Webhook()
+        [Route("webhook")]
+        public async Task<HttpResponseMessage> Post()
         {
             var content = await Request.Content.ReadAsStringAsync();
             var signature = Request.Headers.GetValues("X-Line-Signature").FirstOrDefault();
