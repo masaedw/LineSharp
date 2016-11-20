@@ -71,7 +71,23 @@ namespace LIneSharp.Messages
         // text
         public string text { get; set; }
 
-        // TODO: Not implemented yet: Image, Video, Audio, Location, Sticker
+        // location
+        public string title { get; set; }
+
+        // location
+        public string address { get; set; }
+
+        // location
+        public decimal latitude { get; set; }
+
+        // location
+        public decimal longitude { get; set; }
+
+        // sticker
+        public string packageId { get; set; }
+
+        // sticker
+        public string stickerId { get; set; }
     }
 
     public class PostbackObject
