@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Threading.Tasks;
+using LineSharp.Json;
 using LIneSharp.Messages;
 using Newtonsoft.Json;
 
@@ -11,6 +13,11 @@ namespace LineSharp
 {
     public class LineClient
     {
+        static LineClient()
+        {
+            JsonSubtypes.autoRegister(Assembly.GetExecutingAssembly());
+        }
+
         public string ChannelId { get; }
         public string ChannelSecret { get; }
         public string ChannelAccessToken { get; }
@@ -28,7 +35,7 @@ namespace LineSharp
             Formatter.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
         }
 
-        public IEnumerable<WebhookEventObject> ParseEvent(string content)
+        public IEnumerable<WebhookEventBase> ParseEvent(string content)
         {
             return JsonConvert.DeserializeObject<WebhookEventRequest>(content).events;
         }

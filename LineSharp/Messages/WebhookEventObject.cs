@@ -1,10 +1,80 @@
 ﻿using System.Collections.Generic;
+using LineSharp.Json;
+using Newtonsoft.Json;
 
 namespace LIneSharp.Messages
 {
     public class WebhookEventRequest
     {
-        public IEnumerable<WebhookEventObject> events { get; set; }
+        public IEnumerable<WebhookEventBase> events { get; set; }
+    }
+
+    [JsonConverter(typeof(JsonSubtypes))]
+    public class WebhookEventBase
+    {
+        [JsonTag]
+        [JsonProperty("type")]
+        public string Type { get; set; }
+
+        [JsonProperty("timestamp")]
+        public ulong Timestamp { get; set; }
+
+        [JsonProperty("source")]
+        public SourceObject Source { get; set; }
+    }
+
+    [JsonSubtype("message")]
+    public class MessageEvent : WebhookEventBase
+    {
+        [JsonProperty("replyToken")]
+        public string ReplyToken { get; set; }
+
+        [JsonProperty("message")]
+        public MessageObject Message { get; set; }
+    }
+
+    [JsonSubtype("follow")]
+    public class FollowEvent : WebhookEventBase
+    {
+        [JsonProperty("replyToken")]
+        public string ReplyToken { get; set; }
+    }
+
+    [JsonSubtype("unfollow")]
+    public class UnfollowEvent : WebhookEventBase
+    {
+    }
+
+    [JsonSubtype("join")]
+    public class JoinEvent : WebhookEventBase
+    {
+        [JsonProperty("replyToken")]
+        public string ReplyToken { get; set; }
+    }
+
+    [JsonSubtype("leave")]
+    public class LeaveEvent : WebhookEventBase
+    {
+    }
+
+    [JsonSubtype("postback")]
+    public class PostbackEvent : WebhookEventBase
+    {
+        [JsonProperty("replyToken")]
+        public string ReplyToken { get; set; }
+
+        [JsonProperty("postback")]
+        public PostbackObject Postback { get; set; }
+    }
+
+    [JsonSubtype("beacon")]
+    public class BeaconEvent : WebhookEventBase
+    {
+        [JsonProperty("replyToken")]
+        public string ReplyToken { get; set; }
+
+        [JsonProperty("beacon")]
+        public BeaconObject Beacon { get; set; }
     }
 
     /// <summary>
