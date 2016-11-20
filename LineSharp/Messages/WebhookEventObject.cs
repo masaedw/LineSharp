@@ -77,31 +77,6 @@ namespace LIneSharp.Messages
         public BeaconObject Beacon { get; set; }
     }
 
-    /// <summary>
-    /// https://devdocs.line.me/#webhook-event-object
-    /// </summary>
-    public class WebhookEventObject
-    {
-        // common fields
-        public string type { get; set; }
-
-        public ulong timestamp { get; set; }
-
-        public SourceObject source { get; set; }
-
-        // message, follow, join
-        public string replyToken { get; set; }
-
-        // message
-        public MessageObject message { get; set; }
-
-        // postback
-        public PostbackObject postback { get; set; }
-
-        // beacon
-        public BeaconObject beacon { get; set; }
-    }
-
     public class SourceObject
     {
         public string type { get; set; }

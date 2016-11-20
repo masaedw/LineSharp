@@ -40,79 +40,79 @@ namespace LineSharp
             return JsonConvert.DeserializeObject<WebhookEventRequest>(content).events;
         }
 
-        public async Task HandleEventAsync(WebhookEventObject ev)
+        public async Task HandleEventAsync(WebhookEventBase ev)
         {
             if (ev == null)
             {
                 throw new ArgumentNullException(nameof(ev));
             }
 
-            switch (ev.type)
+            switch (ev.Type)
             {
                 case "message":
-                    await HandleMessage(ev);
+                    await HandleMessage((MessageEvent)ev);
                     return;
 
                 case "follow":
-                    await HandleFollow(ev);
+                    await HandleFollow((FollowEvent)ev);
                     return;
 
                 case "unfollow":
-                    await HandleUnfollow(ev);
+                    await HandleUnfollow((UnfollowEvent)ev);
                     return;
 
                 case "join":
-                    await HandleJoin(ev);
+                    await HandleJoin((JoinEvent)ev);
                     return;
 
                 case "leave":
-                    await HandleLeave(ev);
+                    await HandleLeave((LeaveEvent)ev);
                     return;
 
                 case "postback":
-                    await HandlePostback(ev);
+                    await HandlePostback((PostbackEvent)ev);
                     return;
 
                 case "beacon":
-                    await HandleBeacon(ev);
+                    await HandleBeacon((BeaconEvent)ev);
                     return;
 
                 default:
-                    throw new LineException($"unknown event type: {ev.type}");
+                    throw new LineException($"unknown event type: {ev.Type}");
             }
         }
 
-        public virtual Task HandleMessage(WebhookEventObject ev)
+        public virtual Task HandleMessage(MessageEvent ev)
         {
             return Task.CompletedTask;
         }
 
-        public virtual Task HandleFollow(WebhookEventObject ev)
+        public virtual Task HandleFollow(FollowEvent ev)
         {
             return Task.CompletedTask;
         }
 
-        public virtual Task HandleUnfollow(WebhookEventObject ev)
+        public virtual Task HandleUnfollow(UnfollowEvent ev)
         {
             return Task.CompletedTask;
         }
 
-        public virtual Task HandleJoin(WebhookEventObject ev)
+        public virtual Task HandleJoin(JoinEvent ev)
         {
             return Task.CompletedTask;
         }
 
-        public virtual Task HandleLeave(WebhookEventObject ev)
+        public virtual Task HandleLeave(LeaveEvent ev)
         {
             return Task.CompletedTask;
         }
 
-        public virtual Task HandlePostback(WebhookEventObject ev)
+        public virtual Task HandlePostback(PostbackEvent ev)
         {
             return Task.CompletedTask;
         }
 
-        public virtual Task HandleBeacon(WebhookEventObject ev)
+        public virtual Task HandleBeacon(BeaconEvent ev)
         {
             return Task.CompletedTask;
         }
