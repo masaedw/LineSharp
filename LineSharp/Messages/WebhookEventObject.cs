@@ -30,7 +30,7 @@ namespace LIneSharp.Messages
         public string ReplyToken { get; set; }
 
         [JsonProperty("message")]
-        public MessageObject Message { get; set; }
+        public MessageObjectBase Message { get; set; }
     }
 
     [JsonSubtype("follow")]
@@ -108,41 +108,77 @@ namespace LIneSharp.Messages
         }
     }
 
-    public class MessageObject
+    [JsonConverter(typeof(JsonSubtypes))]
+    public class MessageObjectBase
     {
-        public string id { get; set; }
-        public string type { get; set; }
+        [JsonProperty("id")]
+        public string Id { get; set; }
 
-        // text
-        public string text { get; set; }
+        [JsonTag]
+        [JsonProperty("type")]
+        public string Type { get; set; }
+    }
 
-        // location
-        public string title { get; set; }
+    [JsonSubtype("text")]
+    public class TextMessage : MessageObjectBase
+    {
+        [JsonProperty("text")]
+        public string Text { get; set; }
+    }
 
-        // location
-        public string address { get; set; }
+    [JsonSubtype("image")]
+    public class ImageMessage : MessageObjectBase
+    {
+    }
 
-        // location
-        public decimal latitude { get; set; }
+    [JsonSubtype("video")]
+    public class VideoMessage : MessageObjectBase
+    {
+    }
 
-        // location
-        public decimal longitude { get; set; }
+    [JsonSubtype("audio")]
+    public class AudioMessage : MessageObjectBase
+    {
+    }
 
-        // sticker
-        public string packageId { get; set; }
+    [JsonSubtype("location")]
+    public class LocationMessage : MessageObjectBase
+    {
+        [JsonProperty("title")]
+        public string Title { get; set; }
 
-        // sticker
-        public string stickerId { get; set; }
+        [JsonProperty("address")]
+        public string Address { get; set; }
+
+        [JsonProperty("latitude")]
+        public decimal Latitude { get; set; }
+
+        [JsonProperty("longitude")]
+        public decimal Longitude { get; set; }
+    }
+
+    [JsonSubtype("sticker")]
+    public class StickerMessage : MessageObjectBase
+    {
+        [JsonProperty("packageId")]
+        public string PackageId { get; set; }
+
+        [JsonProperty("stickerId")]
+        public string StickerId { get; set; }
     }
 
     public class PostbackObject
     {
-        public string data { get; set; }
+        [JsonProperty("data")]
+        public string Data { get; set; }
     }
 
     public class BeaconObject
     {
-        public string hwid { get; set; }
-        public string type { get; set; }
+        [JsonProperty("hwid")]
+        public string Hwid { get; set; }
+
+        [JsonProperty("type")]
+        public string Type { get; set; }
     }
 }
