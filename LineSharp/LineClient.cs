@@ -29,7 +29,7 @@ namespace LineSharp
         public string ApiUrlPrefix { get; set; } = DefaultLineUrlPrefix;
         public JsonMediaTypeFormatter Formatter { get; }
 
-        public List<DelegatingHandler> Handlers { get; } = new List<DelegatingHandler>();
+        public List<DelegatingHandler> HttpHandlers { get; } = new List<DelegatingHandler>();
 
         public LineClient(string channelId, string channelSecret, string accessToken)
         {
@@ -157,7 +157,7 @@ namespace LineSharp
 
         public async Task PostAsync<TMessage>(string url, TMessage msg)
         {
-            using (var client = HttpClientFactory.Create(Handlers.ToArray()))
+            using (var client = HttpClientFactory.Create(HttpHandlers.ToArray()))
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ChannelAccessToken);
                 var res = await client.PostAsync($"{ApiUrlPrefix}{url}", msg, Formatter).ConfigureAwait(false);
@@ -171,7 +171,7 @@ namespace LineSharp
 
         public async Task<TResponse> GetAsync<TResponse>(string url)
         {
-            using (var client = HttpClientFactory.Create(Handlers.ToArray()))
+            using (var client = HttpClientFactory.Create(HttpHandlers.ToArray()))
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ChannelAccessToken);
                 var res = await client.GetAsync($"{ApiUrlPrefix}{url}").ConfigureAwait(false);
