@@ -55,31 +55,38 @@ namespace LineSharp
             switch (ev.Type)
             {
                 case "message":
-                    await HandleMessage((MessageEvent)ev);
+                    await HandleMessage((MessageEvent)ev)
+                        .ConfigureAwait(false);
                     return;
 
                 case "follow":
-                    await HandleFollow((FollowEvent)ev);
+                    await HandleFollow((FollowEvent)ev)
+                        .ConfigureAwait(false);
                     return;
 
                 case "unfollow":
-                    await HandleUnfollow((UnfollowEvent)ev);
+                    await HandleUnfollow((UnfollowEvent)ev)
+                        .ConfigureAwait(false);
                     return;
 
                 case "join":
-                    await HandleJoin((JoinEvent)ev);
+                    await HandleJoin((JoinEvent)ev)
+                        .ConfigureAwait(false);
                     return;
 
                 case "leave":
-                    await HandleLeave((LeaveEvent)ev);
+                    await HandleLeave((LeaveEvent)ev)
+                        .ConfigureAwait(false);
                     return;
 
                 case "postback":
-                    await HandlePostback((PostbackEvent)ev);
+                    await HandlePostback((PostbackEvent)ev)
+                        .ConfigureAwait(false);
                     return;
 
                 case "beacon":
-                    await HandleBeacon((BeaconEvent)ev);
+                    await HandleBeacon((BeaconEvent)ev)
+                        .ConfigureAwait(false);
                     return;
 
                 default:
@@ -153,10 +160,10 @@ namespace LineSharp
             using (var client = HttpClientFactory.Create(Handlers.ToArray()))
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ChannelAccessToken);
-                var res = await client.PostAsync($"{ApiUrlPrefix}{url}", msg, Formatter);
+                var res = await client.PostAsync($"{ApiUrlPrefix}{url}", msg, Formatter).ConfigureAwait(false);
                 if (!res.IsSuccessStatusCode)
                 {
-                    var body = await res.Content.ReadAsAsync<ErrorResponse>();
+                    var body = await res.Content.ReadAsAsync<ErrorResponse>().ConfigureAwait(false);
                     throw new LineException(body.Message, body);
                 }
             }
@@ -167,18 +174,18 @@ namespace LineSharp
             using (var client = HttpClientFactory.Create(Handlers.ToArray()))
             {
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ChannelAccessToken);
-                var res = await client.GetAsync($"{ApiUrlPrefix}{url}");
+                var res = await client.GetAsync($"{ApiUrlPrefix}{url}").ConfigureAwait(false);
                 if (!res.IsSuccessStatusCode)
                 {
                     var body = await res.Content.ReadAsAsync<ErrorResponse>();
                     throw new LineException(body.Message, body);
                 }
 
-                return JsonConvert.DeserializeObject<TResponse>(await res.Content.ReadAsStringAsync());
+                return JsonConvert.DeserializeObject<TResponse>(await res.Content.ReadAsStringAsync().ConfigureAwait(false));
             }
         }
 
-        public async Task PushTextAsync(string to, string text)
+        public Task PushTextAsync(string to, string text)
         {
             var msg = new PushMessage
             {
@@ -188,10 +195,10 @@ namespace LineSharp
                     new SendMessageObject { Type = "text", Text = text },
                 },
             };
-            await PostAsync("message/push", msg);
+            return PostAsync("message/push", msg);
         }
 
-        public async Task ReplyTextAsync(string replyToken, string text)
+        public Task ReplyTextAsync(string replyToken, string text)
         {
             var msg = new ReplyMessage
             {
@@ -201,12 +208,12 @@ namespace LineSharp
                     new  SendMessageObject { Type = "text", Text = text },
                 },
             };
-            await PostAsync("message/reply", msg);
+            return PostAsync("message/reply", msg);
         }
 
-        public async Task<UserObject> GetProfileAsync(string userId)
+        public Task<UserObject> GetProfileAsync(string userId)
         {
-            return await GetAsync<UserObject>($"profile/{userId}");
+            return GetAsync<UserObject>($"profile/{userId}");
         }
     }
 }
