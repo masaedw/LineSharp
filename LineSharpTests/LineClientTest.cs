@@ -23,9 +23,9 @@ namespace LineSharpTests
         [Test]
         public void ValidateSignatureTest()
         {
-            var eventStr = ReadResource("events.json");
-            var client = new LineClient("channel_id", "QUNDRVNTX1RPS0VO", "channel_access_token");
-            Assert.IsTrue(client.ValidateSignature(eventStr, "8kcX2m/vS6vlIkZAEZ5usNMl9BRleaB1alXJOHkW4OU="));
+            var e = "{\"events\":[{\"replyToken\":\"00000000000000000000000000000000\",\"type\":\"message\",\"timestamp\":1451617200000,\"source\":{\"type\":\"user\",\"userId\":\"Udeadbeefdeadbeefdeadbeefdeadbeef\"},\"message\":{\"id\":\"100001\",\"type\":\"text\",\"text\":\"Hello,world\"}},{\"replyToken\":\"ffffffffffffffffffffffffffffffff\",\"type\":\"message\",\"timestamp\":1451617210000,\"source\":{\"type\":\"user\",\"userId\":\"Udeadbeefdeadbeefdeadbeefdeadbeef\"},\"message\":{\"id\":\"100002\",\"type\":\"sticker\",\"packageId\":\"1\",\"stickerId\":\"1\"}}]}";
+            var c = new LineClient("channel_id", "9a6f07fc8f2d3723fd1ac2ab3411e38e", "channel_access_tokn");
+            Assert.IsTrue(c.ValidateSignature(e, "cRUG4B7ACUM0Z1UefRxcXynmPEHmzcw7RkXN6Z/HuGs="));
         }
 
         [Test]
