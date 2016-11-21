@@ -94,37 +94,37 @@ namespace LineSharp
             }
         }
 
-        public virtual Task HandleMessage(MessageEvent ev)
+        protected virtual Task HandleMessage(MessageEvent ev)
         {
             return Task.CompletedTask;
         }
 
-        public virtual Task HandleFollow(FollowEvent ev)
+        protected virtual Task HandleFollow(FollowEvent ev)
         {
             return Task.CompletedTask;
         }
 
-        public virtual Task HandleUnfollow(UnfollowEvent ev)
+        protected virtual Task HandleUnfollow(UnfollowEvent ev)
         {
             return Task.CompletedTask;
         }
 
-        public virtual Task HandleJoin(JoinEvent ev)
+        protected virtual Task HandleJoin(JoinEvent ev)
         {
             return Task.CompletedTask;
         }
 
-        public virtual Task HandleLeave(LeaveEvent ev)
+        protected virtual Task HandleLeave(LeaveEvent ev)
         {
             return Task.CompletedTask;
         }
 
-        public virtual Task HandlePostback(PostbackEvent ev)
+        protected virtual Task HandlePostback(PostbackEvent ev)
         {
             return Task.CompletedTask;
         }
 
-        public virtual Task HandleBeacon(BeaconEvent ev)
+        protected virtual Task HandleBeacon(BeaconEvent ev)
         {
             return Task.CompletedTask;
         }
