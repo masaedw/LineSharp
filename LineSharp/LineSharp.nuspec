@@ -10,7 +10,6 @@
     <projectUrl>https://github.com/masaedw/LineSharp</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>First test package</releaseNotes>
     <copyright>Copyright 2016</copyright>
   </metadata>
 </package>
