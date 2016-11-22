@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using LineSharp.Json;
 using Newtonsoft.Json;
 
 namespace LineSharp.Messages
@@ -12,7 +13,7 @@ namespace LineSharp.Messages
         public string ReplyToken { get; set; }
 
         [JsonProperty("messages")]
-        public IEnumerable<SendMessageObject> Messages { get; set; }
+        public IEnumerable<SendMessageBase> Messages { get; set; }
     }
 
     /// <summary>
@@ -24,35 +25,60 @@ namespace LineSharp.Messages
         public string To { get; set; }
 
         [JsonProperty("messages")]
-        public IEnumerable<SendMessageObject> Messages { get; set; }
+        public IEnumerable<SendMessageBase> Messages { get; set; }
     }
 
     /// <summary>
     /// https://devdocs.line.me/#send-message-object
     /// </summary>
-    public class SendMessageObject
+    [JsonConverter(typeof(JsonSubtypes))]
+    public class SendMessageBase
     {
-        // common
+        [JsonTag]
         [JsonProperty("type")]
         public string Type { get; set; }
+    }
 
-        // text
+    [JsonSubtype(MessageType.Text)]
+    public class TextMessage : SendMessageBase
+    {
         [JsonProperty("text")]
         public string Text { get; set; }
+    }
 
-        // image, video, audio
+    [JsonSubtype(MessageType.Image)]
+    public class ImageMessage : SendMessageBase
+    {
         [JsonProperty("originalContentUrl")]
         public string OriginalContentUrl { get; set; }
 
-        // image, video
         [JsonProperty("previewIageUrl")]
         public string PreviewImageUrl { get; set; }
+    }
 
-        // audio
+    [JsonSubtype(MessageType.Video)]
+    public class VideoMessage : SendMessageBase
+    {
+        [JsonProperty("originalContentUrl")]
+        public string OriginalContentUrl { get; set; }
+
+        [JsonProperty("previewIageUrl")]
+        public string PreviewImageUrl { get; set; }
+    }
+
+    [JsonSubtype(MessageType.Audio)]
+    public class AudioMessage : SendMessageBase
+    {
+        [JsonProperty("originalContentUrl")]
+        public string OriginalContentUrl { get; set; }
+
         [JsonProperty("duration")]
         public double Duration { get; set; }
+    }
 
-        // location
+    [JsonSubtype(MessageType.Location)]
+    public class LocationMessage : SendMessageBase
+    {
         [JsonProperty("title")]
         public string Title { get; set; }
 
@@ -64,8 +90,11 @@ namespace LineSharp.Messages
 
         [JsonProperty("longitude")]
         public decimal Longitude { get; set; }
+    }
 
-        // sticker
+    [JsonSubtype(MessageType.Sticker)]
+    public class StickerMessage : SendMessageBase
+    {
         [JsonProperty("packageId")]
         public string PackageId { get; set; }
 

@@ -185,30 +185,36 @@ namespace LineSharp
             }
         }
 
-        public Task PushTextAsync(string to, string text)
+        public Task PushMessageAsync(string to, SendMessageBase msg)
         {
-            var msg = new PushMessage
+            var p = new PushMessage
             {
                 To = to,
-                Messages = new[]
-                {
-                    new SendMessageObject { Type = "text", Text = text },
-                },
+                Messages = new[] { msg },
             };
-            return PostAsync("message/push", msg);
+
+            return PostAsync("message/push", p);
+        }
+
+        public Task PushTextAsync(string to, string text)
+        {
+            return PushMessageAsync(to, new TextMessage { Text = text });
+        }
+
+        public Task ReplyMessageAsync(string replyToken, SendMessageBase msg)
+        {
+            var r = new ReplyMessage
+            {
+                ReplyToken = replyToken,
+                Messages = new[] { msg },
+            };
+
+            return PostAsync("message/reply", r);
         }
 
         public Task ReplyTextAsync(string replyToken, string text)
         {
-            var msg = new ReplyMessage
-            {
-                ReplyToken = replyToken,
-                Messages = new[]
-                {
-                    new  SendMessageObject { Type = "text", Text = text },
-                },
-            };
-            return PostAsync("message/reply", msg);
+            return ReplyMessageAsync(replyToken, new TextMessage { Text = text });
         }
 
         public Task<UserObject> GetProfileAsync(string userId)
