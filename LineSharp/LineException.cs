@@ -1,5 +1,5 @@
 ﻿using System;
-using LIneSharp.Messages;
+using LineSharp.Messages;
 
 namespace LineSharp
 {

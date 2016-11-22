@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace LIneSharp.Messages
+namespace LineSharp.Messages
 {
     /// <summary>
     /// https://devdocs.line.me/#reply-message

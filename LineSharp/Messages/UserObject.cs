@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace LIneSharp.Messages
+namespace LineSharp.Messages
 {
     public class UserObject
     {

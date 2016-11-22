@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using LineSharp;
-using LIneSharp.Messages;
+using LineSharp.Messages;
 using NUnit.Framework;
 
 namespace LineSharpTests

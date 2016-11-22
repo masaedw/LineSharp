@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using LineSharp;
-using LIneSharp.Messages;
+using LineSharp.Messages;
 
 namespace EchoBot.Controllers
 {
