@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Runtime.Caching;
 using System.Threading.Tasks;
 using System.Web.Http;
 using LineSharp;
@@ -38,20 +40,113 @@ namespace EchoBot.Controllers
             {
                 switch (ev.Type)
                 {
-                    case "message":
+                    case EventType.Message:
                         var mev = (MessageEvent)ev;
                         switch (mev.Message.Type)
                         {
-                            case "text":
-                                var message = (TextEventMessage)mev.Message;
-                                await Client.ReplyTextAsync(mev.ReplyToken, message.Text);
-                                break;
+                            case MessageType.Text:
+                                {
+                                    var message = (TextEventMessage)mev.Message;
+                                    await Client.ReplyTextAsync(mev.ReplyToken, message.Text);
+                                    break;
+                                }
+
+                            case MessageType.Image:
+                                {
+                                    var message = (ImageEventMessage)mev.Message;
+                                    var image = await Client.GetContentAsync(message.Id);
+                                    var key = AddToCache(image);
+                                    await Client.ReplyMessageAsync(mev.ReplyToken, new ImageMessage
+                                    {
+                                        OriginalContentUrl = GetContentUrl(key),
+                                        PreviewImageUrl = GetContentUrl(key),
+                                    });
+                                    break;
+                                }
+
+                            case MessageType.Video:
+                                {
+                                    var message = (VideoEventMessage)mev.Message;
+                                    var video = await Client.GetContentAsync(message.Id);
+                                    var key = AddToCache(video);
+                                    await Client.ReplyMessageAsync(mev.ReplyToken, new VideoMessage
+                                    {
+                                        OriginalContentUrl = GetContentUrl(key),
+                                        PreviewImageUrl = GetContentUrl(key),
+                                    });
+                                    break;
+                                }
+
+                            case MessageType.Audio:
+                                {
+                                    var message = (AudioEventMessage)mev.Message;
+                                    var audio = await Client.GetContentAsync(message.Id);
+                                    var key = AddToCache(audio);
+                                    await Client.ReplyMessageAsync(mev.ReplyToken, new AudioMessage
+                                    {
+                                        OriginalContentUrl = GetContentUrl(key),
+                                        Duration = 0.5,
+                                    });
+                                    break;
+                                }
+
+                            case MessageType.Location:
+                                {
+                                    var message = (LocationEventMessage)mev.Message;
+                                    await Client.ReplyMessageAsync(mev.ReplyToken, new LocationMessage
+                                    {
+                                        Address = message.Address,
+                                        Title = message.Title,
+                                        Latitude = message.Latitude,
+                                        Longitude = message.Longitude,
+                                    });
+                                    break;
+                                }
+
+                            case MessageType.Sticker:
+                                {
+                                    var message = (StickerEventMessage)mev.Message;
+                                    await Client.ReplyMessageAsync(mev.ReplyToken, new StickerMessage
+                                    {
+                                        PackageId = message.PackageId,
+                                        StickerId = message.StickerId,
+                                    });
+                                    break;
+                                }
                         }
                         break;
                 }
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, "OK");
+        }
+
+        [Route("content/{key}", Name = "GetContent")]
+        public HttpResponseMessage GetContent(string key)
+        {
+            var result = new HttpResponseMessage(HttpStatusCode.OK);
+            result.Content = new ByteArrayContent(GetFromCache(key));
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            return result;
+        }
+
+        private string AddToCache(byte[] data)
+        {
+            var cache = MemoryCache.Default;
+            var key = Guid.NewGuid().ToString();
+            cache.Add(key, data, new CacheItemPolicy() { AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(5) });
+            return key;
+        }
+
+        private byte[] GetFromCache(string key)
+        {
+            var cache = MemoryCache.Default;
+            return (byte[])cache.Get(key);
+        }
+
+        private string GetContentUrl(string key)
+        {
+            return Url.Link("GetContent", new { key });
         }
     }
 }
