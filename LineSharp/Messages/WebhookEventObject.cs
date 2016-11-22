@@ -11,6 +11,11 @@ namespace LineSharp.Messages
         public IEnumerable<WebhookEventBase> Events { get; set; }
     }
 
+    public interface IReplyableEvent
+    {
+        string ReplyToken { get; }
+    }
+
     [JsonConverter(typeof(JsonSubtypes))]
     public class WebhookEventBase
     {
@@ -26,7 +31,7 @@ namespace LineSharp.Messages
     }
 
     [JsonSubtype("message")]
-    public class MessageEvent : WebhookEventBase
+    public class MessageEvent : WebhookEventBase, IReplyableEvent
     {
         [JsonProperty("replyToken")]
         public string ReplyToken { get; set; }
@@ -36,7 +41,7 @@ namespace LineSharp.Messages
     }
 
     [JsonSubtype("follow")]
-    public class FollowEvent : WebhookEventBase
+    public class FollowEvent : WebhookEventBase, IReplyableEvent
     {
         [JsonProperty("replyToken")]
         public string ReplyToken { get; set; }
@@ -48,7 +53,7 @@ namespace LineSharp.Messages
     }
 
     [JsonSubtype("join")]
-    public class JoinEvent : WebhookEventBase
+    public class JoinEvent : WebhookEventBase, IReplyableEvent
     {
         [JsonProperty("replyToken")]
         public string ReplyToken { get; set; }
@@ -60,7 +65,7 @@ namespace LineSharp.Messages
     }
 
     [JsonSubtype("postback")]
-    public class PostbackEvent : WebhookEventBase
+    public class PostbackEvent : WebhookEventBase, IReplyableEvent
     {
         [JsonProperty("replyToken")]
         public string ReplyToken { get; set; }
@@ -70,7 +75,7 @@ namespace LineSharp.Messages
     }
 
     [JsonSubtype("beacon")]
-    public class BeaconEvent : WebhookEventBase
+    public class BeaconEvent : WebhookEventBase, IReplyableEvent
     {
         [JsonProperty("replyToken")]
         public string ReplyToken { get; set; }
