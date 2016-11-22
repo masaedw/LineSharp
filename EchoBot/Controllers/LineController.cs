@@ -43,7 +43,7 @@ namespace EchoBot.Controllers
                         switch (mev.Message.Type)
                         {
                             case "text":
-                                var message = (TextMessage)mev.Message;
+                                var message = (TextEventMessage)mev.Message;
                                 await Client.ReplyTextAsync(mev.ReplyToken, message.Text);
                                 break;
                         }

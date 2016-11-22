@@ -48,7 +48,7 @@ namespace LineSharp.Messages
         public string ReplyToken { get; set; }
 
         [JsonProperty("message")]
-        public MessageObjectBase Message { get; set; }
+        public EventMessageObjectBase Message { get; set; }
     }
 
     [JsonSubtype(EventType.Follow)]
@@ -156,7 +156,7 @@ namespace LineSharp.Messages
     }
 
     [JsonConverter(typeof(JsonSubtypes))]
-    public class MessageObjectBase
+    public class EventMessageObjectBase
     {
         [JsonProperty("id")]
         public string Id { get; set; }
@@ -167,29 +167,29 @@ namespace LineSharp.Messages
     }
 
     [JsonSubtype(MessageType.Text)]
-    public class TextMessage : MessageObjectBase
+    public class TextEventMessage : EventMessageObjectBase
     {
         [JsonProperty("text")]
         public string Text { get; set; }
     }
 
     [JsonSubtype(MessageType.Image)]
-    public class ImageMessage : MessageObjectBase
+    public class ImageEventMessage : EventMessageObjectBase
     {
     }
 
     [JsonSubtype(MessageType.Video)]
-    public class VideoMessage : MessageObjectBase
+    public class VideoEventMessage : EventMessageObjectBase
     {
     }
 
     [JsonSubtype(MessageType.Audio)]
-    public class AudioMessage : MessageObjectBase
+    public class AudioEventMessage : EventMessageObjectBase
     {
     }
 
     [JsonSubtype(MessageType.Location)]
-    public class LocationMessage : MessageObjectBase
+    public class LocationEventMessage : EventMessageObjectBase
     {
         [JsonProperty("title")]
         public string Title { get; set; }
@@ -205,7 +205,7 @@ namespace LineSharp.Messages
     }
 
     [JsonSubtype(MessageType.Sticker)]
-    public class StickerMessage : MessageObjectBase
+    public class StickerEventMessage : EventMessageObjectBase
     {
         [JsonProperty("packageId")]
         public string PackageId { get; set; }
