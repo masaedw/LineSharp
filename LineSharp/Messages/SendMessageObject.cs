@@ -52,7 +52,7 @@ namespace LineSharp.Messages
         [JsonProperty("originalContentUrl")]
         public string OriginalContentUrl { get; set; }
 
-        [JsonProperty("previewIageUrl")]
+        [JsonProperty("previewImageUrl")]
         public string PreviewImageUrl { get; set; }
     }
 
@@ -62,7 +62,7 @@ namespace LineSharp.Messages
         [JsonProperty("originalContentUrl")]
         public string OriginalContentUrl { get; set; }
 
-        [JsonProperty("previewIageUrl")]
+        [JsonProperty("previewImageUrl")]
         public string PreviewImageUrl { get; set; }
     }
 
