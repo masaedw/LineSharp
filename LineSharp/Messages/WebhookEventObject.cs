@@ -16,6 +16,17 @@ namespace LineSharp.Messages
         string ReplyToken { get; }
     }
 
+    public static class EventType
+    {
+        public const string Message = "message";
+        public const string Follow = "follow";
+        public const string Unfollow = "unfollow";
+        public const string Join = "join";
+        public const string Leave = "leave";
+        public const string Postback = "postback";
+        public const string Beacon = "beacon";
+    }
+
     [JsonConverter(typeof(JsonSubtypes))]
     public class WebhookEventBase
     {
@@ -30,7 +41,7 @@ namespace LineSharp.Messages
         public SourceObjectBase Source { get; set; }
     }
 
-    [JsonSubtype("message")]
+    [JsonSubtype(EventType.Message)]
     public class MessageEvent : WebhookEventBase, IReplyableEvent
     {
         [JsonProperty("replyToken")]
@@ -40,31 +51,31 @@ namespace LineSharp.Messages
         public MessageObjectBase Message { get; set; }
     }
 
-    [JsonSubtype("follow")]
+    [JsonSubtype(EventType.Follow)]
     public class FollowEvent : WebhookEventBase, IReplyableEvent
     {
         [JsonProperty("replyToken")]
         public string ReplyToken { get; set; }
     }
 
-    [JsonSubtype("unfollow")]
+    [JsonSubtype(EventType.Unfollow)]
     public class UnfollowEvent : WebhookEventBase
     {
     }
 
-    [JsonSubtype("join")]
+    [JsonSubtype(EventType.Join)]
     public class JoinEvent : WebhookEventBase, IReplyableEvent
     {
         [JsonProperty("replyToken")]
         public string ReplyToken { get; set; }
     }
 
-    [JsonSubtype("leave")]
+    [JsonSubtype(EventType.Leave)]
     public class LeaveEvent : WebhookEventBase
     {
     }
 
-    [JsonSubtype("postback")]
+    [JsonSubtype(EventType.Postback)]
     public class PostbackEvent : WebhookEventBase, IReplyableEvent
     {
         [JsonProperty("replyToken")]
@@ -74,7 +85,7 @@ namespace LineSharp.Messages
         public PostbackObject Postback { get; set; }
     }
 
-    [JsonSubtype("beacon")]
+    [JsonSubtype(EventType.Beacon)]
     public class BeaconEvent : WebhookEventBase, IReplyableEvent
     {
         [JsonProperty("replyToken")]
@@ -82,6 +93,13 @@ namespace LineSharp.Messages
 
         [JsonProperty("beacon")]
         public BeaconObject Beacon { get; set; }
+    }
+
+    public static class SourceType
+    {
+        public const string User = "user";
+        public const string Group = "group";
+        public const string Room = "room";
     }
 
     [JsonConverter(typeof(JsonSubtypes))]
@@ -100,7 +118,7 @@ namespace LineSharp.Messages
         }
     }
 
-    [JsonSubtype("user")]
+    [JsonSubtype(SourceType.User)]
     public class UserSoruce : SourceObjectBase
     {
         [JsonProperty("userId")]
@@ -109,7 +127,7 @@ namespace LineSharp.Messages
         public override string Id => UserId;
     }
 
-    [JsonSubtype("group")]
+    [JsonSubtype(SourceType.Group)]
     public class GroupSoruce : SourceObjectBase
     {
         [JsonProperty("groupId")]
@@ -118,13 +136,23 @@ namespace LineSharp.Messages
         public override string Id => GroupId;
     }
 
-    [JsonSubtype("room")]
+    [JsonSubtype(SourceType.Room)]
     public class RoomSoruce : SourceObjectBase
     {
         [JsonProperty("roomId")]
         public string RoomId { get; set; }
 
         public override string Id => RoomId;
+    }
+
+    public static class MessageType
+    {
+        public const string Text = "text";
+        public const string Image = "image";
+        public const string Video = "video";
+        public const string Audio = "audio";
+        public const string Location = "location";
+        public const string Sticker = "sticker";
     }
 
     [JsonConverter(typeof(JsonSubtypes))]
@@ -138,29 +166,29 @@ namespace LineSharp.Messages
         public string Type { get; set; }
     }
 
-    [JsonSubtype("text")]
+    [JsonSubtype(MessageType.Text)]
     public class TextMessage : MessageObjectBase
     {
         [JsonProperty("text")]
         public string Text { get; set; }
     }
 
-    [JsonSubtype("image")]
+    [JsonSubtype(MessageType.Image)]
     public class ImageMessage : MessageObjectBase
     {
     }
 
-    [JsonSubtype("video")]
+    [JsonSubtype(MessageType.Video)]
     public class VideoMessage : MessageObjectBase
     {
     }
 
-    [JsonSubtype("audio")]
+    [JsonSubtype(MessageType.Audio)]
     public class AudioMessage : MessageObjectBase
     {
     }
 
-    [JsonSubtype("location")]
+    [JsonSubtype(MessageType.Location)]
     public class LocationMessage : MessageObjectBase
     {
         [JsonProperty("title")]
@@ -176,7 +204,7 @@ namespace LineSharp.Messages
         public decimal Longitude { get; set; }
     }
 
-    [JsonSubtype("sticker")]
+    [JsonSubtype(MessageType.Sticker)]
     public class StickerMessage : MessageObjectBase
     {
         [JsonProperty("packageId")]
