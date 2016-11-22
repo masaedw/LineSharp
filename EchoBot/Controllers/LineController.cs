@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using LineSharp;
 using LineSharp.Messages;
+using NReco.VideoConverter;
 
 namespace EchoBot.Controllers
 {
@@ -69,10 +71,12 @@ namespace EchoBot.Controllers
                                     var message = (VideoEventMessage)mev.Message;
                                     var video = await Client.GetContentAsync(message.Id);
                                     var key = AddToCache(video);
+                                    var thumb = MakeThumbnail(video);
+                                    var thumbkey = AddToCache(thumb);
                                     await Client.ReplyMessageAsync(mev.ReplyToken, new VideoMessage
                                     {
                                         OriginalContentUrl = GetContentUrl(key),
-                                        PreviewImageUrl = GetContentUrl(key),
+                                        PreviewImageUrl = GetContentUrl(thumbkey),
                                     });
                                     break;
                                 }
@@ -147,6 +151,23 @@ namespace EchoBot.Controllers
         private string GetContentUrl(string key)
         {
             return Url.Link("GetContent", new { key });
+        }
+
+        private byte[] MakeThumbnail(byte[] video)
+        {
+            var temp = Path.GetTempFileName();
+            try
+            {
+                File.WriteAllBytes(temp, video);
+                var converter = new FFMpegConverter();
+                var stream = new MemoryStream();
+                converter.GetVideoThumbnail(temp, stream);
+                return stream.ToArray();
+            }
+            finally
+            {
+                File.Delete(temp);
+            }
         }
     }
 }
