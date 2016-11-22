@@ -185,6 +185,22 @@ namespace LineSharp
             }
         }
 
+        public async Task<byte[]> GetAsyncAsByteArray(string url)
+        {
+            using (var client = HttpClientFactory.Create(HttpHandlers.ToArray()))
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ChannelAccessToken);
+                var res = await client.GetAsync($"{ApiUrlPrefix}{url}").ConfigureAwait(false);
+                if (!res.IsSuccessStatusCode)
+                {
+                    var body = await res.Content.ReadAsAsync<ErrorResponse>();
+                    throw new LineException(body.Message, body);
+                }
+
+                return await res.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+            }
+        }
+
         public Task PushMessageAsync(string to, SendMessageBase msg)
         {
             var p = new PushMessage
@@ -220,6 +236,11 @@ namespace LineSharp
         public Task<UserObject> GetProfileAsync(string userId)
         {
             return GetAsync<UserObject>($"profile/{userId}");
+        }
+
+        public Task<byte[]> GetContentAsync(string messageId)
+        {
+            return GetAsyncAsByteArray($"message/{messageId}/content");
         }
     }
 }
