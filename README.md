@@ -76,3 +76,6 @@ namespace EchoBot.Controllers
 Install-Package LineSharp -Pre
 ```
 
+# License
+
+Rock Paper Scissors photo by https://www.flickr.com/photos/gozalewis/4565833940/in/photostream/
