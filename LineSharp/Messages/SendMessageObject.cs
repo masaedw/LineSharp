@@ -101,4 +101,69 @@ namespace LineSharp.Messages
         [JsonProperty("stickerId")]
         public string StickerId { get; set; }
     }
+
+    [JsonSubtype(MessageType.Imagemap)]
+    public class ImagemapMessage : SendMessageBase
+    {
+        [JsonProperty("baseUrl")]
+        public string BaseUrl { get; set; }
+
+        [JsonProperty("altText")]
+        public string AltText { get; set; }
+
+        [JsonProperty("baseSize")]
+        public Size BaseSize { get; set; } = new Size();
+
+        [JsonProperty("actions")]
+        public IEnumerable<ImagemapActionBase> Actions { get; set; }
+    }
+
+    public class Size
+    {
+        [JsonProperty("width")]
+        public int Width { get; set; } = 1040;
+
+        [JsonProperty("height")]
+        public int Height { get; set; }
+    }
+
+    [JsonConverter(typeof(JsonSubtypes))]
+    public class ImagemapActionBase
+    {
+        [JsonTag]
+        [JsonProperty("type")]
+        public string Type { get; set; }
+
+        [JsonProperty("area")]
+        public ImagemapAreaObject Area { get; set; }
+    }
+
+    [JsonSubtype("uri")]
+    public class UriAction : ImagemapActionBase
+    {
+        [JsonProperty("linkUri")]
+        public string LinkUri { get; set; }
+    }
+
+    [JsonSubtype("message")]
+    public class MessageAction : ImagemapActionBase
+    {
+        [JsonProperty("text")]
+        public string Text { get; set; }
+    }
+
+    public class ImagemapAreaObject
+    {
+        [JsonProperty("x")]
+        public int X { get; set; }
+
+        [JsonProperty("y")]
+        public int Y { get; set; }
+
+        [JsonProperty("width")]
+        public int Width { get; set; }
+
+        [JsonProperty("height")]
+        public int Height { get; set; }
+    }
 }

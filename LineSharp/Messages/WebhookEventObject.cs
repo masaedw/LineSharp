@@ -153,6 +153,7 @@ namespace LineSharp.Messages
         public const string Audio = "audio";
         public const string Location = "location";
         public const string Sticker = "sticker";
+        public const string Imagemap = "imagemap";
     }
 
     [JsonConverter(typeof(JsonSubtypes))]

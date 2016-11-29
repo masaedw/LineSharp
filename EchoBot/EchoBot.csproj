@@ -89,16 +89,17 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="Images\4565833940_b572456258_o.jpg" />
-    <Content Include="Images\rps1040.jpg" />
-    <Content Include="Images\rps240.jpg" />
-    <Content Include="Images\rps300.jpg" />
-    <Content Include="Images\rps460.jpg" />
-    <Content Include="Images\rps700.jpg" />
+    <EmbeddedResource Include="Images\rps1040.jpg" />
+    <EmbeddedResource Include="Images\rps240.jpg" />
+    <EmbeddedResource Include="Images\rps300.jpg" />
+    <EmbeddedResource Include="Images\rps460.jpg" />
+    <EmbeddedResource Include="Images\rps700.jpg" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\EchoController.cs" />
+    <Compile Include="Controllers\RPSController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
