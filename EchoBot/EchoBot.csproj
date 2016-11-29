@@ -88,6 +88,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Images\4565833940_b572456258_o.jpg" />
+    <Content Include="Images\rps1040.jpg" />
+    <Content Include="Images\rps240.jpg" />
+    <Content Include="Images\rps300.jpg" />
+    <Content Include="Images\rps460.jpg" />
+    <Content Include="Images\rps700.jpg" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
