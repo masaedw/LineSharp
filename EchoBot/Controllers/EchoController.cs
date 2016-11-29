@@ -13,12 +13,12 @@ using NReco.VideoConverter;
 
 namespace EchoBot.Controllers
 {
-    [RoutePrefix("api/line")]
-    public class LineController : ApiController
+    [RoutePrefix("api/echo")]
+    public class EchoController : ApiController
     {
         private LineClient Client;
 
-        public LineController()
+        public EchoController()
         {
             var channelId = Environment.GetEnvironmentVariable("LINE_CHANNEL_ID");
             var channelSecret = Environment.GetEnvironmentVariable("LINE_CHANNEL_SECRET");
