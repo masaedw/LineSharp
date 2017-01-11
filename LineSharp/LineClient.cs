@@ -65,37 +65,37 @@ namespace LineSharp
 
             switch (ev.Type)
             {
-                case "message":
+                case EventType.Message:
                     await HandleMessage((MessageEvent)ev)
                         .ConfigureAwait(false);
                     return;
 
-                case "follow":
+                case EventType.Follow:
                     await HandleFollow((FollowEvent)ev)
                         .ConfigureAwait(false);
                     return;
 
-                case "unfollow":
+                case EventType.Unfollow:
                     await HandleUnfollow((UnfollowEvent)ev)
                         .ConfigureAwait(false);
                     return;
 
-                case "join":
+                case EventType.Join:
                     await HandleJoin((JoinEvent)ev)
                         .ConfigureAwait(false);
                     return;
 
-                case "leave":
+                case EventType.Leave:
                     await HandleLeave((LeaveEvent)ev)
                         .ConfigureAwait(false);
                     return;
 
-                case "postback":
+                case EventType.Postback:
                     await HandlePostback((PostbackEvent)ev)
                         .ConfigureAwait(false);
                     return;
 
-                case "beacon":
+                case EventType.Beacon:
                     await HandleBeacon((BeaconEvent)ev)
                         .ConfigureAwait(false);
                     return;
