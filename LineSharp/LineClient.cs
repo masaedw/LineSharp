@@ -15,9 +15,20 @@ namespace LineSharp
 {
     public class LineClient
     {
+        private static bool Initialized = false;
+
+        public static void Initialize()
+        {
+            if (!Initialized)
+            {
+                JsonSubtypes.autoRegister(Assembly.GetExecutingAssembly());
+                Initialized = true;
+            }
+        }
+
         static LineClient()
         {
-            JsonSubtypes.autoRegister(Assembly.GetExecutingAssembly());
+            Initialize();
         }
 
         public static readonly string DefaultLineUrlPrefix = "https://api.line.me/v2/bot/";
