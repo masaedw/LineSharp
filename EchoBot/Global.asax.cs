@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Routing;
+using LineSharp;
 
 namespace EchoBot
 {
@@ -11,6 +12,7 @@ namespace EchoBot
     {
         protected void Application_Start()
         {
+            LineClient.Initialize();
             GlobalConfiguration.Configure(WebApiConfig.Register);
         }
     }
