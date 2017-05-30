@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
+﻿using System.Web.Http;
 
 namespace EchoBot
 {
@@ -10,6 +7,7 @@ namespace EchoBot
         public static void Register(HttpConfiguration config)
         {
             // Web API の設定およびサービス
+            config.Routes.IgnoreRoute("Images", "Images");
 
             // Web API ルート
             config.MapHttpAttributeRoutes();

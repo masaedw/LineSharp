@@ -94,11 +94,15 @@
     <EmbeddedResource Include="Images\rps300.jpg" />
     <EmbeddedResource Include="Images\rps460.jpg" />
     <EmbeddedResource Include="Images\rps700.jpg" />
+    <Content Include="Images\abstract-q-c-1024-678-3.jpg" />
+    <Content Include="Images\animals-q-c-1024-678-1.jpg" />
+    <Content Include="Images\nature-q-c-1024-678-7.jpg" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\EchoController.cs" />
+    <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="Controllers\RPSController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
