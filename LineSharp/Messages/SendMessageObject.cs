@@ -166,4 +166,111 @@ namespace LineSharp.Messages
         [JsonProperty("height")]
         public int Height { get; set; }
     }
+
+    [JsonSubtype(MessageType.Template)]
+    public class TemplateMessage : SendMessageBase
+    {
+        [JsonProperty("altText")]
+        public string AltText { get; set; }
+
+        [JsonProperty("template")]
+        public TemplateObjectBase Template { get; set; }
+    }
+
+    [JsonConverter(typeof(JsonSubtypes))]
+    public class TemplateObjectBase
+    {
+        [JsonTag]
+        [JsonProperty("type")]
+        public string Type { get; set; }
+    }
+
+    [JsonSubtype("buttons")]
+    public class ButtonsTemplate : TemplateObjectBase
+    {
+        [JsonProperty("thumbnailImageUrl")]
+        public string ThumbnailImageUrl { get; set; }
+
+        [JsonProperty("title")]
+        public string Title { get; set; }
+
+        [JsonProperty("text")]
+        public string Text { get; set; }
+
+        [JsonProperty("actions")]
+        public IEnumerable<TemplateActionBase> Actions { get; set; }
+    }
+
+    [JsonSubtype("confirm")]
+    public class ConfirmTemplate : TemplateObjectBase
+    {
+        [JsonProperty("text")]
+        public string Text { get; set; }
+
+        [JsonProperty("actions")]
+        public IEnumerable<TemplateActionBase> Actions { get; set; }
+    }
+
+    [JsonSubtype("carousel")]
+    public class CarouselTemplate : TemplateObjectBase
+    {
+        [JsonProperty("columns")]
+        public IEnumerable<ColumnObject> Columns { get; set; }
+    }
+
+    public class ColumnObject
+    {
+        [JsonProperty("thumbnailImageUrl")]
+        public string ThumbnailImageUrl { get; set; }
+
+        [JsonProperty("title")]
+        public string Title { get; set; }
+
+        [JsonProperty("text")]
+        public string Text { get; set; }
+
+        [JsonProperty("actions")]
+        public IEnumerable<TemplateActionBase> Actions { get; set; }
+    }
+
+    [JsonConverter(typeof(JsonSubtypes))]
+    public class TemplateActionBase
+    {
+        [JsonTag]
+        [JsonProperty("type")]
+        public string Type { get; set; }
+    }
+
+    [JsonSubtype("postback")]
+    public class PostbackTemplateAction : TemplateActionBase
+    {
+        [JsonProperty("label")]
+        public string Label { get; set; }
+
+        [JsonProperty("data")]
+        public string Data { get; set; }
+
+        [JsonProperty("text")]
+        public string Text { get; set; }
+    }
+
+    [JsonSubtype("message")]
+    public class MessageTemplateAction : TemplateActionBase
+    {
+        [JsonProperty("label")]
+        public string Label { get; set; }
+
+        [JsonProperty("text")]
+        public string Text { get; set; }
+    }
+
+    [JsonSubtype("uri")]
+    public class UriTemplateAction : TemplateActionBase
+    {
+        [JsonProperty("label")]
+        public string Label { get; set; }
+
+        [JsonProperty("uri")]
+        public string Url { get; set; }
+    }
 }
