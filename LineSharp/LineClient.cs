@@ -30,7 +30,7 @@ namespace LineSharp
         }
 
         public static readonly string DefaultLineUrlPrefix = "https://api.line.me/v2/bot/";
-        public static Func<string, string, IRestClient> CreateRestCrient = (urlPrefix, channelAccessToken) => new RestClient(urlPrefix, channelAccessToken);
+        public static Func<string, string, IRestClient> CreateRestClient = (urlPrefix, channelAccessToken) => new RestClient(urlPrefix, channelAccessToken);
 
         public string ChannelId { get; }
         public string ChannelSecret { get; }
@@ -40,7 +40,7 @@ namespace LineSharp
         {
             ChannelId = channelId;
             ChannelSecret = channelSecret;
-            RestClient = CreateRestCrient(DefaultLineUrlPrefix, accessToken);
+            RestClient = CreateRestClient(DefaultLineUrlPrefix, accessToken);
         }
 
         public IEnumerable<WebhookEventBase> ParseEvent(string content)
