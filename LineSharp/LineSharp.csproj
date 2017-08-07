@@ -56,6 +56,8 @@
     <Compile Include="Messages\UserObject.cs" />
     <Compile Include="Messages\WebhookEventObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rest\IRestClient.cs" />
+    <Compile Include="Rest\RestClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
