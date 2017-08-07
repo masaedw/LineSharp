@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Formatting;
-using System.Net.Http.Headers;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using LineSharp.Json;
 using LineSharp.Messages;
+using LineSharp.Rest;
 using Newtonsoft.Json;
 
 namespace LineSharp
@@ -32,23 +30,17 @@ namespace LineSharp
         }
 
         public static readonly string DefaultLineUrlPrefix = "https://api.line.me/v2/bot/";
+        public static Func<string, string, IRestClient> CreateRestCrient = (urlPrefix, channelAccessToken) => new RestClient(urlPrefix, channelAccessToken);
 
         public string ChannelId { get; }
         public string ChannelSecret { get; }
-        public string ChannelAccessToken { get; }
-
-        public string ApiUrlPrefix { get; set; } = DefaultLineUrlPrefix;
-        public JsonMediaTypeFormatter Formatter { get; }
-
-        public List<DelegatingHandler> HttpHandlers { get; } = new List<DelegatingHandler>();
+        private IRestClient RestClient { get; }
 
         public LineClient(string channelId, string channelSecret, string accessToken)
         {
             ChannelId = channelId;
             ChannelSecret = channelSecret;
-            ChannelAccessToken = accessToken;
-            Formatter = new JsonMediaTypeFormatter();
-            Formatter.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+            RestClient = CreateRestCrient(DefaultLineUrlPrefix, accessToken);
         }
 
         public IEnumerable<WebhookEventBase> ParseEvent(string content)
@@ -166,52 +158,6 @@ namespace LineSharp
             return diff == 0;
         }
 
-        public async Task PostAsync<TMessage>(string url, TMessage msg)
-        {
-            using (var client = HttpClientFactory.Create(HttpHandlers.ToArray()))
-            {
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ChannelAccessToken);
-                var res = await client.PostAsync($"{ApiUrlPrefix}{url}", msg, Formatter).ConfigureAwait(false);
-                if (!res.IsSuccessStatusCode)
-                {
-                    var body = await res.Content.ReadAsAsync<ErrorResponse>().ConfigureAwait(false);
-                    throw new LineException(body.Message, body);
-                }
-            }
-        }
-
-        public async Task<TResponse> GetAsync<TResponse>(string url)
-        {
-            using (var client = HttpClientFactory.Create(HttpHandlers.ToArray()))
-            {
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ChannelAccessToken);
-                var res = await client.GetAsync($"{ApiUrlPrefix}{url}").ConfigureAwait(false);
-                if (!res.IsSuccessStatusCode)
-                {
-                    var body = await res.Content.ReadAsAsync<ErrorResponse>();
-                    throw new LineException(body.Message, body);
-                }
-
-                return JsonConvert.DeserializeObject<TResponse>(await res.Content.ReadAsStringAsync().ConfigureAwait(false));
-            }
-        }
-
-        public async Task<byte[]> GetAsyncAsByteArray(string url)
-        {
-            using (var client = HttpClientFactory.Create(HttpHandlers.ToArray()))
-            {
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ChannelAccessToken);
-                var res = await client.GetAsync($"{ApiUrlPrefix}{url}").ConfigureAwait(false);
-                if (!res.IsSuccessStatusCode)
-                {
-                    var body = await res.Content.ReadAsAsync<ErrorResponse>();
-                    throw new LineException(body.Message, body);
-                }
-
-                return await res.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-            }
-        }
-
         public Task PushMessageAsync(string to, SendMessageBase msg)
         {
             var p = new PushMessage
@@ -220,7 +166,7 @@ namespace LineSharp
                 Messages = new[] { msg },
             };
 
-            return PostAsync("message/push", p);
+            return RestClient.PostAsync("message/push", p);
         }
 
         public Task PushTextAsync(string to, string text)
@@ -236,7 +182,7 @@ namespace LineSharp
                 Messages = new[] { msg },
             };
 
-            return PostAsync("message/reply", r);
+            return RestClient.PostAsync("message/reply", r);
         }
 
         public Task ReplyTextAsync(string replyToken, string text)
@@ -246,12 +192,12 @@ namespace LineSharp
 
         public Task<UserObject> GetProfileAsync(string userId)
         {
-            return GetAsync<UserObject>($"profile/{userId}");
+            return RestClient.GetAsync<UserObject>($"profile/{userId}");
         }
 
         public Task<byte[]> GetContentAsync(string messageId)
         {
-            return GetAsyncAsByteArray($"message/{messageId}/content");
+            return RestClient.GetAsyncAsByteArray($"message/{messageId}/content");
         }
     }
 }
