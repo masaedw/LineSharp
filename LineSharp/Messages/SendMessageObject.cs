@@ -273,4 +273,26 @@ namespace LineSharp.Messages
         [JsonProperty("uri")]
         public string Url { get; set; }
     }
+
+    [JsonSubtype("datetimepicker")]
+    public class DateTimePickerTemplateAction : TemplateActionBase
+    {
+        [JsonProperty("label")]
+        public string Label { get; set; }
+
+        [JsonProperty("data")]
+        public string Data { get; set; }
+
+        [JsonProperty("mode")]
+        public string Mode { get; set; }
+
+        [JsonProperty("initial")]
+        public string Initial { get; set; }
+
+        [JsonProperty("max")]
+        public string Max { get; set; }
+
+        [JsonProperty("min")]
+        public string Min { get; set; }
+    }
 }

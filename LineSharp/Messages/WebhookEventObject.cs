@@ -220,6 +220,21 @@ namespace LineSharp.Messages
     {
         [JsonProperty("data")]
         public string Data { get; set; }
+
+        [JsonProperty("params")]
+        public ParamsObject Params { get; set; }
+    }
+
+    public class ParamsObject
+    {
+        [JsonProperty("date")]
+        public string Date { get; set; }
+
+        [JsonProperty("time")]
+        public string Time { get; set; }
+
+        [JsonProperty("datetime")]
+        public string DateTime { get; set; }
     }
 
     public class BeaconObject
