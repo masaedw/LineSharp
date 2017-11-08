@@ -37,10 +37,9 @@ namespace EchoBot.Controllers
 
             foreach (var ev in events)
             {
-                switch (ev.Type)
+                switch (ev)
                 {
-                    case EventType.Message:
-                        var mev = (MessageEvent)ev;
+                    case MessageEvent mev:
                         switch (mev.Message.Type)
                         {
                             case MessageType.Text:
@@ -58,10 +57,20 @@ namespace EchoBot.Controllers
                                     {
                                         await SendCarouselAsync(mev.ReplyToken);
                                     }
+                                    if (Regex.IsMatch(message.Text, "datetime", RegexOptions.IgnoreCase))
+                                    {
+                                        await SendDateTimePickerAsync(mev.ReplyToken);
+                                    }
 
                                     break;
                                 }
                         }
+                        break;
+
+                    case PostbackEvent pev:
+                        var text = $"Received a PostbackEvent\nData: {pev.Postback.Data}\nParams.Date: {pev.Postback.Params?.Date}\nParams.Time: {pev.Postback.Params?.Time}\nParams.DateTime: {pev.Postback.Params?.DateTime}";
+                        await Client.ReplyTextAsync(pev.ReplyToken, text);
+
                         break;
                 }
             }
@@ -96,6 +105,51 @@ namespace EchoBot.Controllers
                             Label = "Postback with text",
                             Text = "postback text",
                             Data = "hoge=fuga&foo=bar"
+                        },
+                    },
+                },
+            });
+        }
+
+        private async Task SendDateTimePickerAsync(string replyToken)
+        {
+            var now = DateTime.Now;
+            await Client.ReplyMessageAsync(replyToken, new TemplateMessage
+            {
+                AltText = "datetime pickers",
+                Template = new ButtonsTemplate
+                {
+                    ThumbnailImageUrl = Url.Content("~/Images/abstract-q-c-1024-678-3.jpg"),
+                    Text = "Datetime Picker Sample",
+                    Title = "Title",
+                    Actions = new TemplateActionBase[]
+                    {
+                        new DateTimePickerTemplateAction
+                        {
+                            Label = "Date",
+                            Data = "data of date",
+                            Mode = DateTimePickerMode.Date,
+                            Initial = now.ToString("yyyy-MM-dd"),
+                            Min = now.AddDays(-30).ToString("yyyy-MM-dd"),
+                            Max = now.AddDays(30).ToString("yyyy-MM-dd"),
+                        },
+                        new DateTimePickerTemplateAction
+                        {
+                            Label = "Time",
+                            Data = "data of time",
+                            Mode = DateTimePickerMode.Time,
+                            Initial = "12:00",
+                            Min = "09:00",
+                            Max = "21:00",
+                        },
+                        new DateTimePickerTemplateAction
+                        {
+                            Label = "DateTime",
+                            Data = "data of datetime",
+                            Mode = DateTimePickerMode.DateTime,
+                            Initial = now.ToString("yyyy-MM-ddT12:00"),
+                            Min = now.AddDays(-30).ToString("yyyy-MM-ddT00:00"),
+                            Max = now.AddDays(30).ToString("yyyy-MM-ddT23:59"),
                         },
                     },
                 },
