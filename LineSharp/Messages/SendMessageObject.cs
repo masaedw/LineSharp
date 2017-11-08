@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 using LineSharp.Json;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace LineSharp.Messages
 {
@@ -284,7 +286,8 @@ namespace LineSharp.Messages
         public string Data { get; set; }
 
         [JsonProperty("mode")]
-        public string Mode { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public DateTimePickerMode Mode { get; set; }
 
         [JsonProperty("initial")]
         public string Initial { get; set; }
@@ -294,5 +297,17 @@ namespace LineSharp.Messages
 
         [JsonProperty("min")]
         public string Min { get; set; }
+    }
+
+    public enum DateTimePickerMode
+    {
+        [EnumMember(Value = "date")]
+        Date,
+
+        [EnumMember(Value = "time")]
+        Time,
+
+        [EnumMember(Value = "datetime")]
+        DateTime,
     }
 }
