@@ -76,6 +76,13 @@ namespace EchoBot.Controllers
 Install-Package LineSharp -Pre
 ```
 
+# Build package
+
+```powershell
+nuget pack .\LineSharp.csproj -Symbols -Version x.y.z-pre -Build
+```
+
+
 # License
 
 Rock Paper Scissors photo by https://www.flickr.com/photos/gozalewis/4565833940/in/photostream/
