@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LineSharp", "LineSharp\LineSharp.csproj", "{0A2C415B-A00F-4E04-83A2-2B1BBE72B73D}"
 EndProject
@@ -35,5 +35,8 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5DA0A0AC-9B46-4950-8694-53274A72C195} = {27B396C1-131F-4484-8249-A9B0B0F03967}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5A535333-8720-42DD-BF98-992C76183E0E}
 	EndGlobalSection
 EndGlobal

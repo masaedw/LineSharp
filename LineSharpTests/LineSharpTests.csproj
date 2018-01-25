@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LineClientTest.cs" />
+    <Compile Include="LineExceptionTests.cs" />
     <Compile Include="Messages\SerializeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
