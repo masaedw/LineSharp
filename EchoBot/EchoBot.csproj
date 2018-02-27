@@ -99,6 +99,8 @@
     <Content Include="Images\abstract-q-c-1024-678-3.jpg" />
     <Content Include="Images\animals-q-c-1024-678-1.jpg" />
     <Content Include="Images\nature-q-c-1024-678-7.jpg" />
+    <Content Include="Images\solar_2500.jpg" />
+    <Content Include="Images\Solar_System_size_to_scale.svg" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
