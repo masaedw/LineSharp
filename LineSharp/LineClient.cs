@@ -199,5 +199,106 @@ namespace LineSharp
         {
             return RestClient.GetAsyncAsByteArray($"message/{messageId}/content");
         }
+
+        /// <summary>
+        /// Get a rich menu
+        /// https://developers.line.me/en/docs/messaging-api/reference/#get-rich-menu
+        /// </summary>
+        /// <param name="richMenuId"></param>
+        /// <returns></returns>
+        public Task<object> GetRichMenu(string richMenuId)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Create a rich menu
+        /// https://developers.line.me/en/docs/messaging-api/reference/#create-rich-menu
+        /// </summary>
+        /// <param name="richMenu"></param>
+        /// <returns></returns>
+        public Task<object> CreateRichMenu(object richMenu)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Delete a rich menu
+        /// https://developers.line.me/en/docs/messaging-api/reference/#delete-rich-menu
+        /// </summary>
+        /// <param name="richMenuId"></param>
+        /// <returns></returns>
+        public Task<object> DeleteRichMenu(string richMenuId)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Get the rich menu id of a user
+        /// https://developers.line.me/en/docs/messaging-api/reference/#get-rich-menu-id-of-user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public Task<string> GetRichMenuOfUser(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Link a rich menu to a user
+        /// https://developers.line.me/en/docs/messaging-api/reference/#link-rich-menu-to-user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="richMenuId"></param>
+        /// <returns></returns>
+        public Task LinkRichMenuToUser(string userId, string richMenuId)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Unlink the rich menu from a user
+        /// https://developers.line.me/en/docs/messaging-api/reference/#unlink-rich-menu-from-user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public Task UnlinkRichMenuFromUser(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Download the image of a rich menu
+        /// https://developers.line.me/en/docs/messaging-api/reference/#download-rich-menu-image
+        /// </summary>
+        /// <param name="richMenuId"></param>
+        /// <returns></returns>
+        public Task<byte[]> DownloadRichMenuImage(string richMenuId)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Upload an image and attach it to a rich menu
+        /// https://developers.line.me/en/docs/messaging-api/reference/#upload-rich-menu-image
+        /// </summary>
+        /// <param name="richMenuId"></param>
+        /// <param name="contentType"></param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public Task UploadRichMenuImage(string richMenuId, string contentType, byte[] content)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Get all rich menus
+        /// https://developers.line.me/en/docs/messaging-api/reference/#get-rich-menu-list
+        /// </summary>
+        /// <returns></returns>
+        public Task<IEnumerable<object>> GetRichMenuList()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
