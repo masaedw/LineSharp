@@ -11,5 +11,7 @@ namespace LineSharp.Rest
         Task<TResponse> GetAsync<TResponse>(string url);
 
         Task<byte[]> GetAsyncAsByteArray(string url);
+
+        Task DeleteAsync(string url);
     }
 }

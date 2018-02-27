@@ -84,5 +84,19 @@ namespace LineSharp.Rest
                 return await res.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
             }
         }
+
+        public async Task DeleteAsync(string url)
+        {
+            using (var client = HttpClientFactory.Create(HttpHandlers.ToArray()))
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ChannelAccessToken);
+                var res = await client.DeleteAsync($"{UrlPrefix}{url}").ConfigureAwait(false);
+                if (!res.IsSuccessStatusCode)
+                {
+                    var body = await res.Content.ReadAsAsync<ErrorResponse>();
+                    throw new LineException(body.Message, body);
+                }
+            }
+        }
     }
 }
