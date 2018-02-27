@@ -206,9 +206,9 @@ namespace LineSharp
         /// </summary>
         /// <param name="richMenuId"></param>
         /// <returns></returns>
-        public Task<object> GetRichMenu(string richMenuId)
+        public Task<RichMenuResponse> GetRichMenu(string richMenuId)
         {
-            return RestClient.GetAsync<object>($"richmenu/{richMenuId}");
+            return RestClient.GetAsync<RichMenuResponse>($"richmenu/{richMenuId}");
         }
 
         /// <summary>
@@ -217,9 +217,9 @@ namespace LineSharp
         /// </summary>
         /// <param name="richMenu"></param>
         /// <returns></returns>
-        public Task<dynamic> CreateRichMenu(object richMenu)
+        public Task<RichMenuResponse> CreateRichMenu(RichMenu richMenu)
         {
-            return RestClient.PostAsync<dynamic>("richmenu", richMenu);
+            return RestClient.PostAsync<RichMenuResponse>("richmenu", richMenu);
         }
 
         /// <summary>
@@ -297,9 +297,9 @@ namespace LineSharp
         /// https://developers.line.me/en/docs/messaging-api/reference/#get-rich-menu-list
         /// </summary>
         /// <returns></returns>
-        public Task<IEnumerable<dynamic>> GetRichMenuList()
+        public Task<IEnumerable<RichMenuResponse>> GetRichMenuList()
         {
-            return RestClient.GetAsync<IEnumerable<dynamic>>("richmenu/list");
+            return RestClient.GetAsync<IEnumerable<RichMenuResponse>>("richmenu/list");
         }
     }
 }
