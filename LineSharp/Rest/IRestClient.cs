@@ -8,6 +8,8 @@ namespace LineSharp.Rest
 
         Task PostAsync(string url, object msg);
 
+        Task PostByteArrayAsync(string url, byte[] content);
+
         Task<TResponse> GetAsync<TResponse>(string url);
 
         Task<byte[]> GetAsyncAsByteArray(string url);

@@ -53,6 +53,21 @@ namespace LineSharp.Rest
             }
         }
 
+        public async Task PostByteArrayAsync(string url, byte[] msg)
+        {
+            using (var client = HttpClientFactory.Create(HttpHandlers.ToArray()))
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ChannelAccessToken);
+                var content = new ByteArrayContent(msg);
+                var res = await client.PostAsync($"{UrlPrefix}{url}", content).ConfigureAwait(false);
+                if (!res.IsSuccessStatusCode)
+                {
+                    var body = await res.Content.ReadAsAsync<ErrorResponse>().ConfigureAwait(false);
+                    throw new LineException(body.Message, body);
+                }
+            }
+        }
+
         public async Task<TResponse> GetAsync<TResponse>(string url)
         {
             using (var client = HttpClientFactory.Create(HttpHandlers.ToArray()))
