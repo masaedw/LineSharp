@@ -39,6 +39,12 @@ namespace LineSharp.Messages
         public string RichMenuId { get; set; }
     }
 
+    internal class RichMenuList
+    {
+        [JsonProperty("richmenus")]
+        public IEnumerable<RichMenuResponse> RichMenus { get; set; }
+    }
+
     /// <summary>
     /// https://developers.line.me/en/docs/messaging-api/reference/#area-object
     /// </summary>

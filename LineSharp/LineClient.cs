@@ -297,9 +297,10 @@ namespace LineSharp
         /// https://developers.line.me/en/docs/messaging-api/reference/#get-rich-menu-list
         /// </summary>
         /// <returns></returns>
-        public Task<IEnumerable<RichMenuResponse>> GetRichMenuList()
+        public async Task<IEnumerable<RichMenuResponse>> GetRichMenuList()
         {
-            return RestClient.GetAsync<IEnumerable<RichMenuResponse>>("richmenu/list");
+            var list = await RestClient.GetAsync<RichMenuList>("richmenu/list");
+            return list.RichMenus;
         }
     }
 }
