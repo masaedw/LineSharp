@@ -208,7 +208,7 @@ namespace LineSharp
         /// <returns></returns>
         public Task<object> GetRichMenu(string richMenuId)
         {
-            throw new NotImplementedException();
+            return RestClient.GetAsync<object>($"richmenu/{richMenuId}");
         }
 
         /// <summary>
@@ -217,9 +217,9 @@ namespace LineSharp
         /// </summary>
         /// <param name="richMenu"></param>
         /// <returns></returns>
-        public Task<object> CreateRichMenu(object richMenu)
+        public Task<dynamic> CreateRichMenu(object richMenu)
         {
-            throw new NotImplementedException();
+            return RestClient.PostAsync<dynamic>("richmenu", richMenu);
         }
 
         /// <summary>
@@ -228,9 +228,9 @@ namespace LineSharp
         /// </summary>
         /// <param name="richMenuId"></param>
         /// <returns></returns>
-        public Task<object> DeleteRichMenu(string richMenuId)
+        public Task DeleteRichMenu(string richMenuId)
         {
-            throw new NotImplementedException();
+            return RestClient.DeleteAsync($"richmenu/{richMenuId}");
         }
 
         /// <summary>
@@ -239,9 +239,10 @@ namespace LineSharp
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public Task<string> GetRichMenuOfUser(string userId)
+        public async Task<string> GetRichMenuOfUser(string userId)
         {
-            throw new NotImplementedException();
+            var id = await RestClient.GetAsync<RichMenuId>($"user/{userId}/richmenu");
+            return id?.Id;
         }
 
         /// <summary>
@@ -253,7 +254,7 @@ namespace LineSharp
         /// <returns></returns>
         public Task LinkRichMenuToUser(string userId, string richMenuId)
         {
-            throw new NotImplementedException();
+            return RestClient.PostAsync($"user/{userId}/richmenu/{richMenuId}", null);
         }
 
         /// <summary>
@@ -264,7 +265,7 @@ namespace LineSharp
         /// <returns></returns>
         public Task UnlinkRichMenuFromUser(string userId)
         {
-            throw new NotImplementedException();
+            return RestClient.DeleteAsync($"user/{userId}/richmenu");
         }
 
         /// <summary>
@@ -275,7 +276,7 @@ namespace LineSharp
         /// <returns></returns>
         public Task<byte[]> DownloadRichMenuImage(string richMenuId)
         {
-            throw new NotImplementedException();
+            return RestClient.GetAsyncAsByteArray($"richmenu/{richMenuId}/content");
         }
 
         /// <summary>
@@ -288,7 +289,7 @@ namespace LineSharp
         /// <returns></returns>
         public Task UploadRichMenuImage(string richMenuId, string contentType, byte[] content)
         {
-            throw new NotImplementedException();
+            return RestClient.PostByteArrayAsync($"richmenu/{richMenuId}/content", content);
         }
 
         /// <summary>
@@ -296,9 +297,9 @@ namespace LineSharp
         /// https://developers.line.me/en/docs/messaging-api/reference/#get-rich-menu-list
         /// </summary>
         /// <returns></returns>
-        public Task<IEnumerable<object>> GetRichMenuList()
+        public Task<IEnumerable<dynamic>> GetRichMenuList()
         {
-            throw new NotImplementedException();
+            return RestClient.GetAsync<IEnumerable<dynamic>>("richmenu/list");
         }
     }
 }

@@ -52,6 +52,7 @@
     <Compile Include="LineClient.cs" />
     <Compile Include="LineException.cs" />
     <Compile Include="Messages\ErrorResponse.cs" />
+    <Compile Include="Messages\RichMenu.cs" />
     <Compile Include="Messages\SendMessageObject.cs" />
     <Compile Include="Messages\UserObject.cs" />
     <Compile Include="Messages\WebhookEventObject.cs" />
