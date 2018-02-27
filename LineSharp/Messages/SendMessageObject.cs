@@ -235,6 +235,9 @@ namespace LineSharp.Messages
         public IEnumerable<TemplateActionBase> Actions { get; set; }
     }
 
+    /// <summary>
+    /// https://developers.line.me/en/docs/messaging-api/reference/#action-objects
+    /// </summary>
     [JsonConverter(typeof(JsonSubtypes))]
     public class TemplateActionBase
     {
