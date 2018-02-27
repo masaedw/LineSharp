@@ -4,7 +4,9 @@ namespace LineSharp.Rest
 {
     public interface IRestClient
     {
-        Task PostAsync<TMessage>(string url, TMessage msg);
+        Task<TResult> PostAsync<TResult>(string url, object msg);
+
+        Task PostAsync(string url, object msg);
 
         Task<TResponse> GetAsync<TResponse>(string url);
 

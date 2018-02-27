@@ -23,7 +23,23 @@ namespace LineSharp.Rest
             ChannelAccessToken = channelAccessToken;
         }
 
-        public async Task PostAsync<TMessage>(string url, TMessage msg)
+        public async Task<TResponse> PostAsync<TResponse>(string url, object msg)
+        {
+            using (var client = HttpClientFactory.Create(HttpHandlers.ToArray()))
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ChannelAccessToken);
+                var res = await client.PostAsync($"{UrlPrefix}{url}", msg, Formatter).ConfigureAwait(false);
+                if (!res.IsSuccessStatusCode)
+                {
+                    var body = await res.Content.ReadAsAsync<ErrorResponse>().ConfigureAwait(false);
+                    throw new LineException(body.Message, body);
+                }
+
+                return JsonConvert.DeserializeObject<TResponse>(await res.Content.ReadAsStringAsync().ConfigureAwait(false));
+            }
+        }
+
+        public async Task PostAsync(string url, object msg)
         {
             using (var client = HttpClientFactory.Create(HttpHandlers.ToArray()))
             {
