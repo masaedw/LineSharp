@@ -289,7 +289,7 @@ namespace LineSharp
         /// <returns></returns>
         public Task UploadRichMenuImage(string richMenuId, string contentType, byte[] content)
         {
-            return RestClient.PostByteArrayAsync($"richmenu/{richMenuId}/content", content);
+            return RestClient.PostByteArrayAsync($"richmenu/{richMenuId}/content", contentType, content);
         }
 
         /// <summary>
