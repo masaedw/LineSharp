@@ -100,6 +100,11 @@ namespace EchoBot.Controllers
                     },
                     new Area
                     {
+                        Bounds = new Bounds { X = 616, Y = 0, Width = 741-616, Height = 843/2 },
+                        Action = new MessageTemplateAction { Text = "Earth", Label = "Earth" },
+                    },
+                    new Area
+                    {
                         Bounds = new Bounds { X = 741, Y = 0, Width = 850-741, Height = 843/2 },
                         Action = new MessageTemplateAction { Text = "Mars", Label = "Mars" },
                     },
