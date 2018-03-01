@@ -13,11 +13,11 @@ using LineSharp.Messages;
 namespace EchoBot.Controllers
 {
     [RoutePrefix("api/richrps")]
-    public class RichRPSController : ApiController
+    public class RichMenuController : ApiController
     {
         private LineClient Client;
 
-        public RichRPSController()
+        public RichMenuController()
         {
             var channelId = Environment.GetEnvironmentVariable("LINE_CHANNEL_ID");
             var channelSecret = Environment.GetEnvironmentVariable("LINE_CHANNEL_SECRET");

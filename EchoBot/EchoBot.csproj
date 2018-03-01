@@ -106,7 +106,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\EchoController.cs" />
-    <Compile Include="Controllers\RichRPSController.cs" />
+    <Compile Include="Controllers\RichMenuController.cs" />
     <Compile Include="Controllers\TemplateController.cs" />
     <Compile Include="Controllers\RPSController.cs" />
     <Compile Include="Global.asax.cs">
