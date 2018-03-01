@@ -173,6 +173,24 @@ namespace LineSharp.Json
         }
     }
 
+    public class JsonSubtypeNoTagValueException : Exception
+    {
+        public Type SubType { get; private set; }
+        public PropertyInfo PropertyInfo { get; private set; }
+
+        public JsonSubtypeNoTagValueException(Type subType, PropertyInfo propertyInfo) : base(
+            String.Format(
+                @"{0} should have {1} attribute",
+                subType.FullName,
+                propertyInfo.Name
+            )
+        )
+        {
+            SubType = subType;
+            PropertyInfo = propertyInfo;
+        }
+    }
+
     public class JsonSubtypeNotRegisteredException : Exception
     {
         public Type Root { get; private set; }
@@ -426,6 +444,10 @@ namespace LineSharp.Json
                     JToken t = JToken.ReadFrom(reader);
                     var stub = _ReadJson(t.CreateReader(), rootInfo.Root, existingValue, serializer);
                     var tagValue = rootInfo.Property.GetValue(stub) as string;
+                    if (tagValue == null)
+                    {
+                        throw new JsonSubtypeNoTagValueException(rootInfo.Root, rootInfo.Property);
+                    }
                     var implementationMap = implementations[rootInfo.Root];
                     Type implementation;
                     if (implementationMap.TryGetValue(tagValue, out implementation))
