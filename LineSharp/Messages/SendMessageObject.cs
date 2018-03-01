@@ -120,6 +120,9 @@ namespace LineSharp.Messages
         public IEnumerable<ImagemapActionBase> Actions { get; set; }
     }
 
+    /// <summary>
+    /// https://developers.line.me/en/docs/messaging-api/reference/#size-object
+    /// </summary>
     public class Size
     {
         [JsonProperty("width")]
@@ -154,6 +157,9 @@ namespace LineSharp.Messages
         public string Text { get; set; }
     }
 
+    /// <summary>
+    /// https://developers.line.me/en/docs/messaging-api/reference/#imagemap-area-object
+    /// </summary>
     public class ImagemapAreaObject
     {
         [JsonProperty("x")]
@@ -179,6 +185,9 @@ namespace LineSharp.Messages
         public TemplateObjectBase Template { get; set; }
     }
 
+    /// <summary>
+    /// https://developers.line.me/en/docs/messaging-api/reference/#template-messages
+    /// </summary>
     [JsonConverter(typeof(JsonSubtypes))]
     public class TemplateObjectBase
     {
@@ -187,6 +196,9 @@ namespace LineSharp.Messages
         public string Type { get; set; }
     }
 
+    /// <summary>
+    /// https://developers.line.me/en/docs/messaging-api/reference/#buttons
+    /// </summary>
     [JsonSubtype("buttons")]
     public class ButtonsTemplate : TemplateObjectBase
     {
@@ -203,6 +215,9 @@ namespace LineSharp.Messages
         public IEnumerable<TemplateActionBase> Actions { get; set; }
     }
 
+    /// <summary>
+    /// https://developers.line.me/en/docs/messaging-api/reference/#confirm
+    /// </summary>
     [JsonSubtype("confirm")]
     public class ConfirmTemplate : TemplateObjectBase
     {
@@ -213,6 +228,9 @@ namespace LineSharp.Messages
         public IEnumerable<TemplateActionBase> Actions { get; set; }
     }
 
+    /// <summary>
+    /// https://developers.line.me/en/docs/messaging-api/reference/#carousel
+    /// </summary>
     [JsonSubtype("carousel")]
     public class CarouselTemplate : TemplateObjectBase
     {
@@ -220,6 +238,9 @@ namespace LineSharp.Messages
         public IEnumerable<ColumnObject> Columns { get; set; }
     }
 
+    /// <summary>
+    /// https://developers.line.me/en/docs/messaging-api/reference/#column-object-for-carousel
+    /// </summary>
     public class ColumnObject
     {
         [JsonProperty("thumbnailImageUrl")]
@@ -246,6 +267,9 @@ namespace LineSharp.Messages
         public string Type { get; set; }
     }
 
+    /// <summary>
+    /// https://developers.line.me/en/docs/messaging-api/reference/#postback-action
+    /// </summary>
     [JsonSubtype("postback")]
     public class PostbackTemplateAction : TemplateActionBase
     {
@@ -259,6 +283,9 @@ namespace LineSharp.Messages
         public string Text { get; set; }
     }
 
+    /// <summary>
+    /// https://developers.line.me/en/docs/messaging-api/reference/#message-action
+    /// </summary>
     [JsonSubtype("message")]
     public class MessageTemplateAction : TemplateActionBase
     {
@@ -269,6 +296,9 @@ namespace LineSharp.Messages
         public string Text { get; set; }
     }
 
+    /// <summary>
+    /// https://developers.line.me/en/docs/messaging-api/reference/#uri-action
+    /// </summary>
     [JsonSubtype("uri")]
     public class UriTemplateAction : TemplateActionBase
     {
@@ -279,6 +309,9 @@ namespace LineSharp.Messages
         public string Url { get; set; }
     }
 
+    /// <summary>
+    /// https://developers.line.me/en/docs/messaging-api/reference/#datetime-picker-action
+    /// </summary>
     [JsonSubtype("datetimepicker")]
     public class DateTimePickerTemplateAction : TemplateActionBase
     {
